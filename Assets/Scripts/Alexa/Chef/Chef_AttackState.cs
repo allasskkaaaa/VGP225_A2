@@ -6,27 +6,41 @@ using UnityEngine;
 public class Chef_AttackState : Chef_BaseState
 {
     private Shoot shoot;
+    private float atkSpeed;
     public override void EnterState(Chef_StateManager chef) 
     {
         Debug.Log("Entering Attack State");
 
-        shoot = chef.gameObject.GetComponent<Shoot>();
-
-        shoot.ThrowProjectile();
-        chef.SwitchState(chef.cooldownState);
+        //Shooting 
+        atkSpeed = chef.attackSpeed; //Sets attack speed to chef's attack speed
+        shoot = chef.gameObject.GetComponent<Shoot>(); //Gets shoot script from chef
+        //shoot.ThrowProjectile(); //Launches projectile
     }
 
     public override void UpdateState(Chef_StateManager chef)
     {
-        if (chef.target == null)
+        if (chef.target == null) //If the chef target isn't set, it returns to idle
         {
             chef.SwitchState(chef.idleState);
             return;
         }
+
+        //Look at target
         Vector3 targetPosition = chef.target.transform.position;
         targetPosition.y = chef.transform.position.y; // Keep Y position unchanged
 
+
         chef.transform.LookAt(targetPosition);
+
+        if (atkSpeed > 0) //Counts down using attack speed and shoots once its reached below 0
+        {
+            atkSpeed -= Time.deltaTime;
+        }
+        else
+        {
+            shoot.ThrowProjectile();
+            atkSpeed = chef.attackSpeed;
+        }
     }
 
 
@@ -37,6 +51,7 @@ public class Chef_AttackState : Chef_BaseState
 
     public override void OnCollisionExit(Chef_StateManager chef, Collider collision)
     {
-        chef.SwitchState(chef.idleState);
+        if (collision.gameObject.CompareTag("Player"))
+            chef.SwitchState(chef.idleState);
     }
 }

@@ -28,13 +28,11 @@ public class Chef_IdleState : Chef_BaseState
 
     public override void OnCollisionStay(Chef_StateManager chef, Collider collision)
     {
-        
-        if (!collision.gameObject.CompareTag("Player")) //Ignore any other game object except the player
-            return;
-        chef.target = collision.gameObject; //If player, set them as the chef's target
-
-        Debug.Log("Target set as " + chef.target.name);
-        chef.SwitchState(chef.attackState);
+        if (collision.gameObject.CompareTag("Player"))
+           { 
+            chef.target = collision.gameObject; //If player, set them as the chef's target
+            chef.SwitchState(chef.attackState);
+        }
     }
 
     public override void OnCollisionExit(Chef_StateManager chef, Collider collision)
@@ -47,6 +45,5 @@ public class Chef_IdleState : Chef_BaseState
         float randomY = Random.Range(0f, 360f); // Pick a random Y-axis angle
         targetRotation = Quaternion.Euler(0, randomY, 0); // Keep only Y rotation
 
-        Debug.Log("Rotating to: " + randomY);
     }
 }

@@ -16,7 +16,12 @@ public class Chef_Projectile : MonoBehaviour
 
     public void Launch(Vector3 force)
     {
-        rb.velocity = force;
+        if (rb == null)
+        {
+            rb = GetComponent<Rigidbody>();
+        }
+        
+        rb.AddForce(force, ForceMode.Impulse);
     }
 
 }
