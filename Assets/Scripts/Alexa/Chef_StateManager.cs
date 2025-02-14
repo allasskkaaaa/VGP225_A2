@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Chef_StateManager : MonoBehaviour
 {
+    [SerializeField] public float cooldownTime;    
+    
     Chef_BaseState currentState;
 
+    public GameObject target;
     public Chef_IdleState idleState = new Chef_IdleState();
     public Chef_AttackState attackState = new Chef_AttackState();
     public Chef_CooldownState cooldownState = new Chef_CooldownState();
@@ -28,8 +32,15 @@ public class Chef_StateManager : MonoBehaviour
         state.EnterState(this);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerStay(Collider collision)
     {
-        currentState.OnCollisionEnter(this, collision);
+        target = collision.gameObject;
+        currentState.OnCollisionStay(this, collision);
+    }
+
+    private void OnTriggerExit(Collider collision)
+    {
+        target = collision.gameObject;
+        currentState.OnCollisionExit(this, collision);
     }
 }
