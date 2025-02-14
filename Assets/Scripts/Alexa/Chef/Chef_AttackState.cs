@@ -1,13 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Chef_AttackState : Chef_BaseState
 {
-    
+    private Shoot shoot;
     public override void EnterState(Chef_StateManager chef) 
     {
         Debug.Log("Entering Attack State");
+
+        shoot = chef.gameObject.GetComponent<Shoot>();
+
+        shoot.ThrowProjectile();
+        chef.SwitchState(chef.cooldownState);
     }
 
     public override void UpdateState(Chef_StateManager chef)
