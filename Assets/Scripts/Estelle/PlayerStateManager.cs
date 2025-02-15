@@ -7,26 +7,32 @@ using static Player_InputHandler;
 public class PlayerStateManager : MonoBehaviour
 {
     PlayerBaseState currentState;
-    PlayerIdleState idleState = new PlayerIdleState();
-    PlayerMoveState moveState = new PlayerMoveState();  
-    PlayerHideState hideState = new PlayerHideState();
-    PlayerJumpState jumpState = new PlayerJumpState();
+    public PlayerIdleState idleState = new PlayerIdleState();
+    public PlayerMoveState moveState = new PlayerMoveState();
+    public PlayerHideState hideState = new PlayerHideState();
+    public PlayerJumpState jumpState = new PlayerJumpState();
+    public PlayerDeathState deathState = new PlayerDeathState();
 
     private Vector2 direction2D;
     private Vector3 direction3D;
 
-    private Vector3 velocity;
+    public Vector3 velocity;
     private bool isGrounded;
 
 
     [SerializeField] public float speed = 1f;
-    [SerializeField] private float gravity = -9.81f;
-    [SerializeField] private float jumpForce = 2f;  // Jump strength
+    [SerializeField] public float gravity = -9.81f;
+    [SerializeField] public float jumpForce = 2f;  // Jump strength
     [SerializeField] private float rotationSpeed = 1f;
+    [SerializeField] private float animationTransitionDuration;
+    [SerializeField] public float HideDuration;
 
     [SerializeField] private Transform camera;
 
-    private CharacterController cc;
+    public CharacterController cc;
+    private Animator animator;
+    public bool IsHiding = false;
+    public float HideTimeLeft = 0;
 
     void Start()
     {
@@ -35,16 +41,20 @@ public class PlayerStateManager : MonoBehaviour
 
         currentState = idleState;
 
-        currentState.EnterState(this);
-
         cc = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+
+        currentState.EnterState(this);
     }
 
     private void Update()
     {
         currentState.UpdateState(this);
+    }
 
-        
+    public void PlayAnimation(string name)
+    {
+        animator.CrossFade(name, animationTransitionDuration);
     }
 
     private void FixedUpdate()
@@ -75,6 +85,10 @@ public class PlayerStateManager : MonoBehaviour
 
     public void playerMove()
     {
+        // Cannot move while hiding
+        if (IsHiding)
+            return;
+
         cc.Move(direction3D.normalized * speed * Time.deltaTime);
 
         if (direction3D.magnitude > 0.01f)
@@ -93,15 +107,12 @@ public class PlayerStateManager : MonoBehaviour
 
     public void playerHide()
     {
-        Debug.Log("Player is Hiding");
+        currentState.OnHidePressed(this);
     }
 
     public void playerJump()
     {
-        if (!cc.isGrounded)
-            return;
-         
-        velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity); // Apply jump force
+        currentState.OnJumpPressed(this);
     }
 
 }
