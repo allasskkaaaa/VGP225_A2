@@ -22,6 +22,9 @@ public class PlayerStateManager : MonoBehaviour
     [SerializeField] public float speed = 1f;
     [SerializeField] private float gravity = -9.81f;
     [SerializeField] private float jumpForce = 2f;  // Jump strength
+    [SerializeField] private float rotationSpeed = 1f;
+
+    [SerializeField] private Transform camera;
 
     private CharacterController cc;
 
@@ -47,7 +50,12 @@ public class PlayerStateManager : MonoBehaviour
     private void FixedUpdate()
     {
         direction2D = Player_InputHandler.player_InputHandler.moveInput.ReadValue<Vector2>();
-        direction3D = new Vector3(direction2D.x, 0, direction2D.y);
+
+        Vector3 cameraForward = new Vector3(camera.forward.x, 0, camera.forward.z).normalized;
+        Vector3 cameraRight = new Vector3(camera.right.x, 0, camera.right.z).normalized;
+
+        direction3D = cameraForward * direction2D.y + cameraRight * direction2D.x;
+
         playerMove();
         ApplyGravity();
 
@@ -67,9 +75,13 @@ public class PlayerStateManager : MonoBehaviour
 
     public void playerMove()
     {
-       cc.Move(direction3D * speed * Time.deltaTime);
-      if(direction3D.magnitude > 0.01f)
-        cc.transform.forward = direction3D;
+        cc.Move(direction3D.normalized * speed * Time.deltaTime);
+
+        if (direction3D.magnitude > 0.01f)
+        {
+            Vector3 laggingForward = Vector3.Slerp(cc.transform.forward, direction3D.normalized, Time.deltaTime * rotationSpeed);
+            cc.transform.forward = laggingForward;
+        }
     }
         
 
@@ -88,7 +100,7 @@ public class PlayerStateManager : MonoBehaviour
     {
         if (!cc.isGrounded)
             return;
-
+         
         velocity.y = Mathf.Sqrt(jumpForce * -2f * gravity); // Apply jump force
     }
 
