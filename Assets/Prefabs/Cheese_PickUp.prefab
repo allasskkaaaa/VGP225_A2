@@ -62,7 +62,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 440423f09855e8e47a52aa815e15d3ca, type: 3}
       propertyPath: m_Name
-      value: food_ingredient_cheese
+      value: Cheese_PickUp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -114,3 +114,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreValue: 1
+  pickupSoundEffect: {fileID: 8300000, guid: a5299a938997a264ebecd245111d988e, type: 3}

@@ -6,6 +6,7 @@ public class Cat_Hide : Cat_BaseState
 {
     private float timer;
     private float hideTimer;
+    private bool soundPlayed;
     public override void EnterState(Cat_StateManager cat)
     {
         Debug.Log("Entering Hiding State");
@@ -13,6 +14,7 @@ public class Cat_Hide : Cat_BaseState
         timer = cat.chargeTime;
         hideTimer = cat.changeSpotCooldown;
         cat.anim.Play("Sit");
+        soundPlayed = false;
     }
 
     public override void UpdateState(Cat_StateManager cat)
@@ -27,7 +29,14 @@ public class Cat_Hide : Cat_BaseState
             cat.SwitchState(cat.searchState);
         }
     }
-
+    public override void OnTriggerEnter(Cat_StateManager cat, Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && !soundPlayed)
+        {   
+            soundPlayed = true;
+            SoundManager.instance.PlayClip(cat.huntSound);
+        }
+    }
     public override void OnTriggerStay(Cat_StateManager cat, Collider collision)
     {
 
@@ -44,15 +53,13 @@ public class Cat_Hide : Cat_BaseState
                 cat.SwitchState(cat.attackState);
             }
         }
-        else
-        {
-        }
     }
 
     public override void OnTriggerExit(Cat_StateManager cat, Collider collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            soundPlayed = false;
             timer = cat.chargeTime; //Reset the charge up to attack if the player leaves cat radius
         }
     }

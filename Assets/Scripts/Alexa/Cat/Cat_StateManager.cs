@@ -14,6 +14,10 @@ public class Cat_StateManager : MonoBehaviour
     public float pounceCooldown = 3f;
     public float changeSpotCooldown = 10f;
 
+    [Header("Sound Effects")]
+    public AudioClip huntSound;
+    public AudioClip pounceSound;
+
     Cat_BaseState currentState;
 
     public Cat_Attack attackState = new Cat_Attack();
@@ -45,6 +49,11 @@ public class Cat_StateManager : MonoBehaviour
     private void OnTriggerStay(Collider collision)
     {
         currentState.OnTriggerStay(this, collision);
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        currentState.OnTriggerEnter(this, collision);
     }
 
     private void OnTriggerExit(Collider collision)

@@ -10,6 +10,7 @@ public class Cat_Attack : Cat_BaseState
     private bool hasPounced;
     private float cooldownTimer;
     private float timer;
+    private bool soundPlayed;
 
     public override void EnterState(Cat_StateManager cat)
     {
@@ -19,6 +20,7 @@ public class Cat_Attack : Cat_BaseState
         cooldownTimer = cat.pounceCooldown;
         timer = cat.pounceCooldown;
         hasPounced = false;
+        soundPlayed = false;
     }
 
     public override void UpdateState(Cat_StateManager cat)
@@ -58,7 +60,13 @@ public class Cat_Attack : Cat_BaseState
 
         while (elapsed < duration)
         {
+            if (!soundPlayed)
+            {
+                soundPlayed = true;
+                SoundManager.instance.PlayClip(cat.pounceSound);
+            }
             cat.anim.Play("Jump");
+            
             rb.velocity = pounceDirection * (speed / duration); // Use fixed direction
             elapsed += Time.deltaTime;
             yield return null;
@@ -70,7 +78,10 @@ public class Cat_Attack : Cat_BaseState
     }
 
 
-
+    public override void OnTriggerEnter(Cat_StateManager cat, Collider collision)
+    {
+        
+    }
 
     public override void OnTriggerStay(Cat_StateManager cat, Collider collision)
     {

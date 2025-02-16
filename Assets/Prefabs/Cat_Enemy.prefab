@@ -126,7 +126,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6647131506220806907, guid: 27e82c8a2f2dc474a8d10d84ae09e664, type: 3}
       propertyPath: m_Name
-      value: Cat Variant
+      value: Cat_Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 6647131506220806908, guid: 27e82c8a2f2dc474a8d10d84ae09e664, type: 3}
       propertyPath: m_LocalPosition.x
@@ -237,6 +237,9 @@ MonoBehaviour:
   chargeTime: 5
   pounceForce: 10
   pounceCooldown: 10
+  changeSpotCooldown: 10
+  huntSound: {fileID: 8300000, guid: 3fc8bd8ff8a63c145867e73821063834, type: 3}
+  pounceSound: {fileID: 0}
   anim: {fileID: 0}
 --- !u!54 &4054878707045234593
 Rigidbody:
