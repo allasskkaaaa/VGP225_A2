@@ -7,11 +7,12 @@ using UnityEngine.AI;
 public class Cat_StateManager : MonoBehaviour
 {
 
-    //public Transform player;
+    //Player properties
     public NavMeshAgent navMeshAgent;
     public float chargeTime = 5f;
     public float pounceForce = 10f;
     public float pounceCooldown = 3f;
+    public float changeSpotCooldown = 10f;
 
     Cat_BaseState currentState;
 
@@ -19,8 +20,11 @@ public class Cat_StateManager : MonoBehaviour
     public Cat_Hide hideState = new Cat_Hide();
     public Cat_Search searchState = new Cat_Search();
 
+    public Animator anim;
     void Start()
     {
+        anim = GetComponent<Animator>();
+
         currentState = searchState;
 
         currentState.EnterState(this);

@@ -58,6 +58,7 @@ public class Cat_Attack : Cat_BaseState
 
         while (elapsed < duration)
         {
+            cat.anim.Play("Jump");
             rb.velocity = pounceDirection * (speed / duration); // Use fixed direction
             elapsed += Time.deltaTime;
             yield return null;
