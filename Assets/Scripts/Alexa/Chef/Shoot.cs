@@ -5,7 +5,7 @@ using UnityEngine;
 public class Shoot : MonoBehaviour
 {
     [SerializeField] private List<Chef_Projectile> projectiles = new List<Chef_Projectile>(); //All possible objects to throw
-    [SerializeField] private Transform throwPoint; //Point from which the projectile is thrown
+    [SerializeField] public Transform throwPoint; //Point from which the projectile is thrown
     [SerializeField] private float throwForce = 10f;
     
 

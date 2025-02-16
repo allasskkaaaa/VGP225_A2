@@ -31,6 +31,7 @@ public class Chef_AttackState : Chef_BaseState
 
 
         chef.transform.LookAt(targetPosition);
+        shoot.throwPoint.LookAt(targetPosition); //Always aim at the player
 
         if (atkSpeed > 0) //Counts down using attack speed and shoots once its reached below 0
         {
@@ -39,6 +40,7 @@ public class Chef_AttackState : Chef_BaseState
         else
         {
             shoot.ThrowProjectile();
+            
             atkSpeed = chef.attackSpeed;
         }
     }
