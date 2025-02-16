@@ -6,11 +6,14 @@ using static Player_InputHandler;
 
 public class PlayerStateManager : MonoBehaviour
 {
+    public static PlayerStateManager Instance { get; private set; }
+
     PlayerBaseState currentState;
     public PlayerIdleState idleState = new PlayerIdleState();
     public PlayerMoveState moveState = new PlayerMoveState();
     public PlayerHideState hideState = new PlayerHideState();
     public PlayerJumpState jumpState = new PlayerJumpState();
+    public PlayerHurtState hurtState = new PlayerHurtState();
     public PlayerDeathState deathState = new PlayerDeathState();
 
     private Vector2 direction2D;
@@ -19,6 +22,7 @@ public class PlayerStateManager : MonoBehaviour
     public Vector3 velocity;
     private bool isGrounded;
 
+    
 
     [SerializeField] public float speed = 1f;
     [SerializeField] public float gravity = -9.81f;
@@ -26,16 +30,27 @@ public class PlayerStateManager : MonoBehaviour
     [SerializeField] private float rotationSpeed = 1f;
     [SerializeField] private float animationTransitionDuration;
     [SerializeField] public float HideDuration;
+    [SerializeField] public float HurtDuration;
 
     [SerializeField] private Transform camera;
 
     public CharacterController cc;
     private Animator animator;
     public bool IsHiding = false;
+    public bool IsHurt = false;
     public float HideTimeLeft = 0;
+    public float HurtTimeLeft = 0;
 
     void Start()
     {
+        if (Instance != null)
+        {
+            Destroy(this);
+        } else
+        {
+            Instance = this;
+        }
+
         Player_InputHandler.player_InputHandler.OnJumpPressed += playerJump;
         Player_InputHandler.player_InputHandler.OnHidePressed += playerHide;
 
@@ -86,7 +101,7 @@ public class PlayerStateManager : MonoBehaviour
     public void playerMove()
     {
         // Cannot move while hiding
-        if (IsHiding)
+        if (IsHiding || IsHurt)
             return;
 
         cc.Move(direction3D.normalized * speed * Time.deltaTime);
@@ -113,6 +128,18 @@ public class PlayerStateManager : MonoBehaviour
     public void playerJump()
     {
         currentState.OnJumpPressed(this);
+    }
+    public void OnTriggerEnter(Collider other)
+    {
+        BroomCollider broomCollider = other.GetComponent<BroomCollider>();
+
+        if (broomCollider != null)
+        {
+            // Did collide with broom collider
+            Debug.Log("Damage");
+            IsHurt = true;
+            SwitchState(hurtState);
+        }
     }
 
 }
