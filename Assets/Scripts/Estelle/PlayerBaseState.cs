@@ -31,4 +31,10 @@ public abstract class PlayerBaseState
         StateManager.IsHiding = true;
     }
 
+    public virtual void OnDamaged(PlayerStateManager StateManager)
+    {
+        // The player can get hurt in any state apart from the death state
+
+        StateManager.SwitchState(StateManager.hurtState);
+    }
 }
