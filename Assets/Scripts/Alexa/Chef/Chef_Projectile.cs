@@ -9,7 +9,7 @@ public class Chef_Projectile : MonoBehaviour
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        //rb = GetComponent<Rigidbody>();
 
         Destroy(gameObject, lifetime);
     }
@@ -18,7 +18,7 @@ public class Chef_Projectile : MonoBehaviour
     {
         if (rb == null)
         {
-            rb = GetComponent<Rigidbody>();
+            rb = this.GetComponent<Rigidbody>();
         }
         
         rb.AddForce(force, ForceMode.Impulse);
