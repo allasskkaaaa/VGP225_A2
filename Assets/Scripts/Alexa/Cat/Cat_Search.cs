@@ -42,6 +42,7 @@ public class Cat_Search : Cat_BaseState
             int randomHidingSpot = Random.Range(0, hidingSpots.Length);
 
             cat.navMeshAgent.destination = hidingSpots[randomHidingSpot].transform.position;
+            cat.anim.Play("Walk");
         }
 
         if (HasReachedDestination(cat))
@@ -61,7 +62,10 @@ public class Cat_Search : Cat_BaseState
     }
 
 
+    public override void OnTriggerEnter(Cat_StateManager cat, Collider collision)
+    {
 
+    }
 
     public override void OnTriggerStay(Cat_StateManager cat, Collider collision)
     {

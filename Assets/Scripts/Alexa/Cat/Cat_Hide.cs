@@ -5,25 +5,45 @@ using UnityEngine;
 public class Cat_Hide : Cat_BaseState
 {
     private float timer;
+    private float hideTimer;
+    private bool soundPlayed;
     public override void EnterState(Cat_StateManager cat)
     {
         Debug.Log("Entering Hiding State");
 
         timer = cat.chargeTime;
+        hideTimer = cat.changeSpotCooldown;
+        cat.anim.Play("Sit");
+        soundPlayed = false;
     }
 
     public override void UpdateState(Cat_StateManager cat)
     {
-
+        //If player hasn't approached cat for a set time, it searches for a new hding spot
+        if (hideTimer > 0)
+        {
+            hideTimer -= Time.deltaTime;
+        }
+        else
+        {
+            cat.SwitchState(cat.searchState);
+        }
     }
-
+    public override void OnTriggerEnter(Cat_StateManager cat, Collider collision)
+    {
+        if (collision.gameObject.CompareTag("Player") && !soundPlayed)
+        {   
+            soundPlayed = true;
+            SoundManager.instance.PlayClip(cat.huntSound);
+        }
+    }
     public override void OnTriggerStay(Cat_StateManager cat, Collider collision)
     {
 
         if (collision.gameObject.CompareTag("Player")) //If player enters cat radius
         {
-            Debug.Log("Player detected");
             cat.gameObject.transform.LookAt(collision.transform); //Look at player
+            hideTimer = cat.changeSpotCooldown; //Resets timer for cat to search for new hiding spot
 
             if (timer > 0)
             {
@@ -33,16 +53,13 @@ public class Cat_Hide : Cat_BaseState
                 cat.SwitchState(cat.attackState);
             }
         }
-        else
-        {
-            Debug.Log(collision.gameObject.name + " detected");
-        }
     }
 
     public override void OnTriggerExit(Cat_StateManager cat, Collider collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            soundPlayed = false;
             timer = cat.chargeTime; //Reset the charge up to attack if the player leaves cat radius
         }
     }
