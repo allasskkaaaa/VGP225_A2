@@ -145,7 +145,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectiles:
-  - {fileID: 1561287943122263798, guid: 8d738abbb8714b14cbc05d62b8cb241f, type: 3}
+  - {fileID: 7263554300351635057, guid: 9606d1e1bf80ce74782f851bb8262a8b, type: 3}
+  - {fileID: 6884669907476905060, guid: faaf5e24121017549b6fa510ad2a85e5, type: 3}
+  - {fileID: 8385213243809617812, guid: b0f7a72f240eaf649bae19f6fa575332, type: 3}
   throwPoint: {fileID: 2682234310150472605}
   throwForce: 10
 --- !u!136 &2737723784018196568
