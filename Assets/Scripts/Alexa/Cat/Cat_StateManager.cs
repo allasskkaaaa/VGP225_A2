@@ -2,9 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Cat_StateManager : MonoBehaviour
 {
+
+    //public Transform player;
+    public NavMeshAgent navMeshAgent;
+    public float chargeTime = 5f;
+    public float pounceForce = 10f;
+    public float pounceCooldown = 3f;
 
     Cat_BaseState currentState;
 
@@ -29,5 +36,15 @@ public class Cat_StateManager : MonoBehaviour
     {
         currentState = state;
         state.EnterState(this);
+    }
+
+    private void OnTriggerStay(Collider collision)
+    {
+        currentState.OnTriggerStay(this, collision);
+    }
+
+    private void OnTriggerExit(Collider collision)
+    {
+        currentState.OnTriggerExit(this, collision);
     }
 }
