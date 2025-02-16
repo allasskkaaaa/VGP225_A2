@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager gameManager { get; private set; }
 
+    [SerializeField] public int score;
+
     private void Awake()
     {
         if (gameManager != null && gameManager != this)
@@ -32,4 +34,6 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+
 }
