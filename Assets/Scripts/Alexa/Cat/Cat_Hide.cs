@@ -33,7 +33,6 @@ public class Cat_Hide : Cat_BaseState
 
         if (collision.gameObject.CompareTag("Player")) //If player enters cat radius
         {
-            Debug.Log("Player detected");
             cat.gameObject.transform.LookAt(collision.transform); //Look at player
             hideTimer = cat.changeSpotCooldown; //Resets timer for cat to search for new hiding spot
 
@@ -47,7 +46,6 @@ public class Cat_Hide : Cat_BaseState
         }
         else
         {
-            Debug.Log(collision.gameObject.name + " detected");
         }
     }
 
