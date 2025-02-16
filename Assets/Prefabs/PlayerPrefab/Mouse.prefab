@@ -704,7 +704,7 @@ MonoBehaviour:
   animationTransitionDuration: 0.5
   HideDuration: 2.5
   camera: {fileID: 0}
-  cc: {fileID: 0}
+  cc: {fileID: 3461031156405511794}
   IsHiding: 0
   HideTimeLeft: 0
 --- !u!114 &4141520649416683005
