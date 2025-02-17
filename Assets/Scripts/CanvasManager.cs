@@ -49,4 +49,14 @@ public class CanvasManager : MonoBehaviour
             Application.Quit(); // Quits the built application
 #endif
     }
+
+    public void MainMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void GameOver()
+    {
+        SceneManager.LoadScene(2);
+    }
 }
