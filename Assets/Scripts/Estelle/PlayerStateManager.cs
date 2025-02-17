@@ -137,7 +137,7 @@ public class PlayerStateManager : MonoBehaviour
         BroomCollider broomCollider = other.GetComponent<BroomCollider>();
         Chef_Projectile projectile = other.GetComponent<Chef_Projectile>();
 
-        if (broomCollider != null || projectile != null)
+        if (broomCollider != null || projectile != null || other.tag == "Cat")
         {
             // Did collide with broom collider
             Debug.Log("Damage");
