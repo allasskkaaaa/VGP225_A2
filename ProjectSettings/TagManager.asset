@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Hiding Spot
   - Projectile
+  - Cat
   layers:
   - Default
   - TransparentFX
