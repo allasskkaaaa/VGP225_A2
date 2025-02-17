@@ -9,6 +9,7 @@ public abstract class Cat_BaseState
     public abstract void UpdateState(Cat_StateManager cat);
 
     public abstract void OnTriggerEnter(Cat_StateManager cat, Collider collision);
+
     public abstract void OnTriggerStay(Cat_StateManager cat, Collider collision);
 
     public abstract void OnTriggerExit(Cat_StateManager cat, Collider collision);

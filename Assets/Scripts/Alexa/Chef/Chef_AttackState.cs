@@ -7,10 +7,11 @@ public class Chef_AttackState : Chef_BaseState
 {
     private Shoot shoot;
     private float atkSpeed;
+    private bool animPlayed;
     public override void EnterState(Chef_StateManager chef) 
     {
         Debug.Log("Entering Attack State");
-
+        animPlayed = false;
         //Shooting 
         atkSpeed = chef.attackSpeed; //Sets attack speed to chef's attack speed
         shoot = chef.gameObject.GetComponent<Shoot>(); //Gets shoot script from chef
@@ -31,7 +32,7 @@ public class Chef_AttackState : Chef_BaseState
 
 
         chef.transform.LookAt(targetPosition);
-        shoot.throwPoint.LookAt(targetPosition); //Always aim at the player
+        chef.throwPoint.LookAt(targetPosition); //Always aim at the player
 
         if (atkSpeed > 0) //Counts down using attack speed and shoots once its reached below 0
         {
@@ -39,10 +40,11 @@ public class Chef_AttackState : Chef_BaseState
         }
         else
         {
-            shoot.ThrowProjectile();
-            
+            chef.anim.SetTrigger("Throwing");
             atkSpeed = chef.attackSpeed;
         }
+        
+
     }
 
 

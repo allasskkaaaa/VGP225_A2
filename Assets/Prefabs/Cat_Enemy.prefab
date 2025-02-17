@@ -294,8 +294,8 @@ MonoBehaviour:
   pounceForce: 10
   pounceCooldown: 10
   changeSpotCooldown: 10
-  huntSound: {fileID: 8300000, guid: 3fc8bd8ff8a63c145867e73821063834, type: 3}
-  pounceSound: {fileID: 0}
+  huntSound: {fileID: 8300000, guid: f71d0a3fe7b82c04a8b864161de64eb9, type: 3}
+  pounceSound: {fileID: 8300000, guid: ad9a9b1cc0a05114ab24de7c4a23a208, type: 3}
   anim: {fileID: 0}
 --- !u!54 &4054878707045234593
 Rigidbody:

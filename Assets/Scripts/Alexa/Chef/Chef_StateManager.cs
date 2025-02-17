@@ -11,6 +11,9 @@ public class Chef_StateManager : MonoBehaviour
 
     Chef_BaseState currentState;
 
+    public Animator anim;
+    public Transform throwPoint;
+
     public GameObject target;
     public Chef_IdleState idleState = new Chef_IdleState();
     public Chef_AttackState attackState = new Chef_AttackState();
@@ -18,6 +21,9 @@ public class Chef_StateManager : MonoBehaviour
 
     private void Start()
     {
+        if (anim == null)
+            Debug.LogError("No Animator set for chef");
+
         currentState = idleState;
 
         currentState.EnterState(this);

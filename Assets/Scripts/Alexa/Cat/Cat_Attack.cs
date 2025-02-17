@@ -58,13 +58,15 @@ public class Cat_Attack : Cat_BaseState
         float duration = 0.5f;
         float elapsed = 0f;
 
+        if (!soundPlayed)
+        {
+            soundPlayed = true;
+            SoundManager.instance.PlayClip(cat.pounceSound);
+        }
+
         while (elapsed < duration)
         {
-            if (!soundPlayed)
-            {
-                soundPlayed = true;
-                SoundManager.instance.PlayClip(cat.pounceSound);
-            }
+            
             cat.anim.Play("Jump");
             
             rb.velocity = pounceDirection * (speed / duration); // Use fixed direction

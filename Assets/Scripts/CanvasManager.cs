@@ -12,12 +12,30 @@ public class CanvasManager : MonoBehaviour
 
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private List<Image> hearts;
-    
+
+    [SerializeField] private GameObject pausePanel;
+    private bool paused;
 
     private void Start()
     {
         instance = this;
     }
+
+    private void Update()
+    {
+        if (pausePanel != null)
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (paused)
+                    unPauseGame();
+                else
+                    pauseGame();
+            }
+        }
+        
+    }
+
     public void updateScoreUI()
     {
         if (scoreText != null) scoreText.text = GameManager.gameManager.score.ToString();
@@ -58,5 +76,19 @@ public class CanvasManager : MonoBehaviour
     public void GameOver()
     {
         SceneManager.LoadScene(2);
+    }
+
+    public void pauseGame()
+    {
+        pausePanel.SetActive(true);
+        paused = true;
+        Time.timeScale = 0;
+    }
+
+    public void unPauseGame()
+    {
+        pausePanel.SetActive(false);
+        paused = false;
+        Time.timeScale = 1;
     }
 }
