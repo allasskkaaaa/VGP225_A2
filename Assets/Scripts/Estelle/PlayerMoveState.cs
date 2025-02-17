@@ -16,6 +16,4 @@ public class PlayerMoveState : PlayerBaseState
             StateManager.SwitchState(StateManager.idleState);
         }
     }
-
-    
 }

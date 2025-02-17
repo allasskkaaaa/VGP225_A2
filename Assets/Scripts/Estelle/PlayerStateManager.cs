@@ -20,9 +20,7 @@ public class PlayerStateManager : MonoBehaviour
     private Vector3 direction3D;
 
     public Vector3 velocity;
-    private bool isGrounded;
-
-    
+    private bool isGrounded;    
 
     [SerializeField] public float speed = 1f;
     [SerializeField] public float gravity = -9.81f;
@@ -40,6 +38,9 @@ public class PlayerStateManager : MonoBehaviour
     public bool IsHurt = false;
     public float HideTimeLeft = 0;
     public float HurtTimeLeft = 0;
+
+    public int playerMaxHealth = 6;
+    public int playerHealth;
 
     void Start()
     {
@@ -60,6 +61,8 @@ public class PlayerStateManager : MonoBehaviour
         animator = GetComponent<Animator>();
 
         currentState.EnterState(this);
+
+        playerHealth = playerMaxHealth;
     }
 
     private void Update()
@@ -132,14 +135,23 @@ public class PlayerStateManager : MonoBehaviour
     public void OnTriggerEnter(Collider other)
     {
         BroomCollider broomCollider = other.GetComponent<BroomCollider>();
+        Chef_Projectile projectile = other.GetComponent<Chef_Projectile>();
 
-        if (broomCollider != null)
+        if (broomCollider != null || projectile != null)
         {
             // Did collide with broom collider
             Debug.Log("Damage");
+            playerTakeDamage();
             IsHurt = true;
             SwitchState(hurtState);
         }
+
     }
 
+    public void playerTakeDamage()
+    {
+        playerHealth -= 1;
+        Debug.Log("the player health is: " + playerHealth);
+        CanvasManager.instance.healthUI();
+    }
 }

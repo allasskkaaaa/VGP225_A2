@@ -11,6 +11,8 @@ public class CanvasManager : MonoBehaviour
     public static CanvasManager instance;
 
     [SerializeField] private TMP_Text scoreText;
+    [SerializeField] private List<Image> hearts;
+    
 
     private void Start()
     {
@@ -21,6 +23,19 @@ public class CanvasManager : MonoBehaviour
         if (scoreText != null) scoreText.text = GameManager.gameManager.score.ToString();
     }
 
+    public void healthUI()
+    {
+        for(int i = 0; i < hearts.Count; i++) {
+            if (i >= PlayerStateManager.Instance.playerHealth)
+            {
+                hearts[i].gameObject.SetActive(false);
+            } else
+            {
+                hearts[i].gameObject.SetActive(true);
+            }
+        }
+    }
+
     public void startGame()
     {
         SceneManager.LoadScene(1);
@@ -28,7 +43,6 @@ public class CanvasManager : MonoBehaviour
 
     public void quitGame()
     {
-
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false; // Stops play mode in Editor
 #else
