@@ -152,6 +152,12 @@ public class PlayerStateManager : MonoBehaviour
     {
         playerHealth -= 1;
         Debug.Log("the player health is: " + playerHealth);
+
+        if (playerHealth <= 0)
+        {
+            CanvasManager.instance.GameOver();
+        }
+
         CanvasManager.instance.healthUI();
     }
 }
