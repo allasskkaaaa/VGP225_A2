@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class CanvasManager : MonoBehaviour
@@ -33,5 +34,19 @@ public class CanvasManager : MonoBehaviour
                 hearts[i].gameObject.SetActive(true);
             }
         }
+    }
+
+    public void startGame()
+    {
+        SceneManager.LoadScene(1);
+    }
+
+    public void quitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // Stops play mode in Editor
+#else
+            Application.Quit(); // Quits the built application
+#endif
     }
 }
