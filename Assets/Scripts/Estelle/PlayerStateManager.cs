@@ -141,9 +141,10 @@ public class PlayerStateManager : MonoBehaviour
         {
             // Did collide with broom collider
             Debug.Log("Damage");
+            SwitchState(hurtState);
             playerTakeDamage();
             IsHurt = true;
-            SwitchState(hurtState);
+            
         }
 
     }
@@ -155,9 +156,15 @@ public class PlayerStateManager : MonoBehaviour
 
         if (playerHealth <= 0)
         {
-            CanvasManager.instance.GameOver();
+            SwitchState(deathState);
         }
 
         CanvasManager.instance.healthUI();
+    }
+
+    public void OnPlayerDeathAnimationCompleted()
+    {
+        GameManager.gameManager.ResetScore();
+        CanvasManager.instance.GameOver();
     }
 }

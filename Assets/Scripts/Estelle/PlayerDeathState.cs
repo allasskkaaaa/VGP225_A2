@@ -6,6 +6,7 @@ public class PlayerDeathState : PlayerBaseState
 {
     public override void EnterState(PlayerStateManager StateManager)
     {
+        Debug.Log("PlayerDeathState");
         StateManager.PlayAnimation("Death");
     }
 

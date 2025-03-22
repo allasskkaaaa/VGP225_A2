@@ -12,6 +12,7 @@ public class CanvasManager : MonoBehaviour
 
     [SerializeField] private TMP_Text scoreText;
     [SerializeField] private List<Image> hearts;
+    [SerializeField] private Image scoreBar;
 
     [SerializeField] private GameObject pausePanel;
     private bool paused;
@@ -39,6 +40,10 @@ public class CanvasManager : MonoBehaviour
     public void updateScoreUI()
     {
         if (scoreText != null) scoreText.text = GameManager.gameManager.score.ToString();
+
+        float ScorePercentage = (float)GameManager.gameManager.score / (float)GameManager.gameManager.scoreToWin;
+
+        scoreBar.fillAmount = ScorePercentage;
     }
 
     public void healthUI()

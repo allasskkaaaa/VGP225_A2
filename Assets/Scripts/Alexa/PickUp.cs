@@ -18,7 +18,7 @@ public class PickUp_Score : MonoBehaviour
             if (anim != null)
                 anim.Play("Eat");
 
-            GameManager.gameManager.score += scoreValue;
+            GameManager.gameManager.addScore(scoreValue);
             CanvasManager.instance.updateScoreUI();
             SoundManager.instance.PlayClip(pickupSoundEffect);
             Destroy(gameObject);
